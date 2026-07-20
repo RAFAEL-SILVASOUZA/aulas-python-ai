@@ -3,6 +3,8 @@ import os
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from agents.Db import search
+
 
 load_dotenv()
 
@@ -14,14 +16,23 @@ model = ChatOpenAI(
 )
 
 
-def get_weather(city: str) -> str:
-    """Get weather for a given city."""
-    return f"It's always sunny in {city}!"
+def retreaver(query: str, k: int) -> str:
+    """Search for documents matching a query.
+
+    Args:
+        query: The search string.
+        k: Number of results to return.
+
+    Returns:
+        A dict with the original query and the list of results.
+    """
+    resultados = search(query, k=k)
+    return {"query": query, "resultados": resultados}
 
 
 agent = create_agent(
     model=model,
-    tools=[get_weather],
+    tools=[retreaver],
     system_prompt="You are a helpful assistant",
 )
 
