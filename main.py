@@ -1,28 +1,16 @@
-from langchain.agents import create_agent
-from langchain_openai import ChatOpenAI
-import os
-from dotenv import load_dotenv
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-load_dotenv()
+from agents import run_agent
 
-
-model = ChatOpenAI(
-    model="",
-    base_url=os.getenv("URL_BASE"), 
-    api_key=os.getenv("API_KEY"))
-
-def get_weather(city: str) -> str:
-    """Get weather for a given city."""
-    return f"It's always sunny in {city}!"
-
-agent = create_agent(
-    model=model,    
-    tools=[get_weather],
-    system_prompt="You are a helpful assistant",
-)
+app = FastAPI(title="Aulas Python AI")
 
 
-result = agent.invoke(
-    {"messages": [{"role": "user", "content": "What's the weather in São Paulo?"}]}
-)
-print(result["messages"][-1].content_blocks)
+class ChatRequest(BaseModel):
+    message: str
+
+
+@app.post("/chat")
+def chat(request: ChatRequest):
+    resposta = run_agent(request.message)
+    return {"response": resposta}
