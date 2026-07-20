@@ -28,7 +28,7 @@ aulas-python-ai/
 ├── main.py                     # API FastAPI (endpoints /chat e /upload)
 ├── agents/
 │   ├── __init__.py             # expõe run_agent
-│   ├── retreaver_agent.py      # agente LangChain + tool de busca (retriever)
+│   ├── retriever_agent.py      # agente LangChain + tool de busca (retriever)
 │   └── Db/
 │       ├── __init__.py         # expõe embeddings, get_vectorstore, ingest_text, search
 │       └── embeddings.py       # embeddings do LM Studio + base Chroma + ingestão/busca

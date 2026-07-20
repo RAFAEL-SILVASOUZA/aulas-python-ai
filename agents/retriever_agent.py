@@ -16,7 +16,7 @@ model = ChatOpenAI(
 )
 
 
-def retreaver(query: str, k: int) -> str:
+def retriever(query: str, k: int) -> str:
     """Search for documents matching a query.
 
     Args:
@@ -32,7 +32,7 @@ def retreaver(query: str, k: int) -> str:
 
 agent = create_agent(
     model=model,
-    tools=[retreaver],
+    tools=[retriever],
     system_prompt="You are a helpful assistant",
 )
 
