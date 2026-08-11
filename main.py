@@ -9,12 +9,13 @@ app = FastAPI(title="Aulas Python AI")
 
 class ChatRequest(BaseModel):
     message: str
+    thread_id: str = "default"
 
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-    resposta = run_agent(request.message)
-    return {"response": resposta}
+    resposta = run_agent(request.message, thread_id=request.thread_id)
+    return {"response": resposta, "thread_id": request.thread_id}
 
 
 @app.post("/upload")
