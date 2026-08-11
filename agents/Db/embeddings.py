@@ -16,6 +16,8 @@ embeddings = OpenAIEmbeddings(
     base_url=URL_EMBEDDINGS,
     api_key=os.getenv("API_KEY"),  
     check_embedding_ctx_length=False,
+    # A API da Nvidia nao aceita encoding_format="base64" (padrao do SDK da OpenAI).
+    model_kwargs={"encoding_format": "float"},
 )
 
 
